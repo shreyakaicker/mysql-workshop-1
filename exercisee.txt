@@ -1,0 +1,330 @@
+shreyakaicker:~/workspace (master) $ mysql-ctl start
+Installing MySQL
+ * Stopping MySQL database server mysqld                                            [ OK ]
+ * Starting MySQL database server mysqld                                            [ OK ]
+ * Checking for tables which need an upgrade, are corrupt or were
+not closed cleanly.
+
+MySQL 5.5 database added.  Please make note of these credentials:
+
+       Root User: shreyakaicker
+   Database Name: c9
+
+ * Starting MySQL database server mysqld                                            [ OK ]
+shreyakaicker:~/workspace (master) $ mysql --user shreyakaicker
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 54
+Server version: 5.5.49-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database
+show databases' at line 1
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| c9                 |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> create database decodemtl_test;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| c9                 |
+| decodemtl_test     |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database decodemtl_addressbook;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases ;
++-----------------------+
+| Database              |
++-----------------------+
+| information_schema    |
+| c9                    |
+| decodemtl_addressbook |
+| decodemtl_test        |
+| mysql                 |
+| performance_schema    |
+| phpmyadmin            |
++-----------------------+
+7 rows in set (0.00 sec)
+
+mysql> drop database decodemtl_test;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show databases ;
++-----------------------+
+| Database              |
++-----------------------+
+| information_schema    |
+| c9                    |
+| decodemtl_addressbook |
+| mysql                 |
+| performance_schema    |
+| phpmyadmin            |
++-----------------------+
+6 rows in set (0.01 sec)
+
+mysql> show databases ;
++-----------------------+
+| Database              |
++-----------------------+
+| information_schema    |
+| c9                    |
+| decodemtl_addressbook |
+| mysql                 |
+| performance_schema    |
+| phpmyadmin            |
++-----------------------+
+6 rows in set (0.00 sec)
+
+mysql> USE decodemtl_addressbook;
+Database changed
+mysql> CREATE TABLE expenses (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     expense_date DATETIME,
+    ->     category ENUM('food', 'rent', 'fun'),
+    ->     price_in_cents INT,
+    ->     description VARCHAR(150)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DROP TABLE expenses;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables ;
+Empty set (0.00 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql>  CREATE TABLE Account (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 4
+mysql> CREATE TABLE Account (id INT AUTO_INCREMENT PRIMARY KEY );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Account (id INT AUTO_INCREMENT PRIMARY KEY );
+ERROR 1050 (42S01): Table 'Account' already exists
+mysql> show tables ;
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
++---------------------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE AddressBook (id INT AUTO_INCREMENT PRIMARY KEY );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Entry (id INT AUTO_INCREMENT PRIMARY KEY );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Test (id INT AUTO_INCREMENT PRIMARY KEY );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables ;
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
+| Test                            |
++---------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> DROP TABLE Test;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables ;
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
++---------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Entry ADD COLUMN type ENUM ("home","work","other");
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Entry
+    -> describe Entry;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'describe Entry' at line 2
+mysql>  describe Entry;
++-------+-----------------------------+------+-----+---------+----------------+
+| Field | Type                        | Null | Key | Default | Extra          |
++-------+-----------------------------+------+-----+---------+----------------+
+| id    | int(11)                     | NO   | PRI | NULL    | auto_increment |
+| type  | enum('home','work','other') | YES  |     | NULL    |                |
++-------+-----------------------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Entry ADD COLUMN subtype ENUM ("phone","address","email");              
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  describe Entry;
++---------+---------------------------------+------+-----+---------+----------------+
+| Field   | Type                            | Null | Key | Default | Extra          |
++---------+---------------------------------+------+-----+---------+----------------+
+| id      | int(11)                         | NO   | PRI | NULL    | auto_increment |
+| type    | enum('home','work','other')     | YES  |     | NULL    |                |
+| subtype | enum('phone','address','email') | YES  |     | NULL    |                |
++---------+---------------------------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql>  CREATE TABLE Barn (    
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,            
+    ->     date DATETIME,    
+    ->     category ENUM('rooster', 'hen', 'chicks'),    
+    ->     numberOfChicks INT );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>     CREATE TABLE Chickens (    
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,            
+    ->     dateOfBirth DATETIME,    
+    ->     name VARCHAR(150),
+    ->     numberOfChicks INT );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables ;
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Barn                            |
+| Chickens                        |
+| Entry                           |
++---------------------------------+
+5 rows in set (0.00 sec)
+
+mysql>  describe Barn;
++----------------+--------------------------------+------+-----+---------+----------------+
+| Field          | Type                           | Null | Key | Default | Extra          |
++----------------+--------------------------------+------+-----+---------+----------------+
+| id             | int(11)                        | NO   | PRI | NULL    | auto_increment |
+| date           | datetime                       | YES  |     | NULL    |                |
+| category       | enum('rooster','hen','chicks') | YES  |     | NULL    |                |
+| numberOfChicks | int(11)                        | YES  |     | NULL    |                |
++----------------+--------------------------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql>  describe Chickens;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| dateOfBirth    | datetime     | YES  |     | NULL    |                |
+| name           | varchar(150) | YES  |     | NULL    |                |
+| numberOfChicks | int(11)      | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> DROP TABLE Barn;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DROP TABLE Chickens;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables ;+---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
++---------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> show databases ;
++-----------------------+
+| Database              |
++-----------------------+
+| information_schema    |
+| c9                    |
+| decodemtl_addressbook |
+| mysql                 |
+| performance_schema    |
+| phpmyadmin            |
++-----------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database BarnExercise;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use BarnExercise;
+Database changed
+mysql> CREATE TABLE Barn (    
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,            
+    ->     numberOfChicks INT );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Chickens (    
+    ->     id INT AUTO_INCREMENT PRIMARY KEY, 
+    ->     category ENUM('rooster', 'hen', 'chicks'),
+    ->     dateOfBirth DATETIME );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables ;                                         
++------------------------+
+| Tables_in_BarnExercise |
++------------------------+
+| Barn                   |
+| Chickens               |
++------------------------+
+2 rows in set (0.00 sec)
+
+mysql>  describe Chickens;                                         
++-------------+--------------------------------+------+-----+---------+----------------+
+| Field       | Type                           | Null | Key | Default | Extra          |
++-------------+--------------------------------+------+-----+---------+----------------+
+| id          | int(11)                        | NO   | PRI | NULL    | auto_increment |
+| category    | enum('rooster','hen','chicks') | YES  |     | NULL    |                |
+| dateOfBirth | datetime                       | YES  |     | NULL    |                |
++-------------+--------------------------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql>  describe Barn;
++----------------+---------+------+-----+---------+----------------+
+| Field          | Type    | Null | Key | Default | Extra          |
++----------------+---------+------+-----+---------+----------------+
+| id             | int(11) | NO   | PRI | NULL    | auto_increment |
+| numberOfChicks | int(11) | YES  |     | NULL    |                |
++----------------+---------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> 
